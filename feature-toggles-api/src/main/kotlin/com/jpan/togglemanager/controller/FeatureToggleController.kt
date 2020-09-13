@@ -76,7 +76,7 @@ data class FeatureToggleController(
         return updated
     }
 
-    @ApiOperation(value = "Fetch feature by name. User role: PM")
+    @ApiOperation(value = "Fetch feature by id. User role: PM")
     @ApiImplicitParams(
             ApiImplicitParam(name = "Authorization", value = "Basic *encoded user info*", required = false, paramType = "header", dataType = "string")
     )
