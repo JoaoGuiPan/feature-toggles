@@ -1,0 +1,76 @@
+
+<mat-card *ngIf="feature" class="mat-elevation-z0">
+  <mat-card-content>
+
+    <form #form="ngForm">
+      <div class="row">
+
+        <mat-form-field class="col-xs-12 col-md-6">
+          <mat-label>
+            {{'feature.technicalName' | translate}}
+          </mat-label>
+          <input matInput type="text" name="technicalName" [(ngModel)]="feature.technicalName" required [disabled]="feature.id" />
+        </mat-form-field>
+
+        <mat-form-field class="col-xs-12 col-md-6">
+          <mat-label>
+            {{'feature.displayName' | translate}}
+          </mat-label>
+          <input matInput type="text" name="displayName" [(ngModel)]="feature.displayName" [disabled]="feature.id && isExpired"/>
+        </mat-form-field>
+
+        <mat-form-field class="col-xs-12 col-md-6">
+          <mat-label>
+            {{'feature.expiresOn' | translate}}
+          </mat-label>
+          <input matInput [matDatepicker]="picker" name="expiresOn" [(ngModel)]="feature.expiresOn" [disabled]="feature.id && isExpired" required>
+          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
+
+        <div class="col-xs-12 col-md-6" style="padding-top: 1em;">
+          <mat-checkbox name="inverted" [(ngModel)]="feature.inverted" [disabled]="feature.id && isExpired">{{'feature.inverted' | translate}}</mat-checkbox>
+        </div>
+
+        <mat-form-field class="col-xs-12">
+          <mat-label>
+            {{'feature.description' | translate}}
+          </mat-label>
+          <textarea matInput name="description"
+            [matTextareaAutosize]="true"
+            [matAutosizeMinRows]="3"
+            [(ngModel)]="feature.description"
+            [disabled]="isExpired"></textarea>
+        </mat-form-field>
+
+        <mat-form-field class="col-xs-12">
+          <mat-chip-list #customers>
+            <mat-chip *ngFor="let customer of feature.customerIds"
+              [selectable]="feature.id && !isExpired" [removable]="feature.id && !isExpired"
+              (removed)="removeCustomer(customer)">
+              {{customer}}
+              <mat-icon matChipRemove>cancel</mat-icon>
+            </mat-chip>
+            <input placeholder="{{'feature.customerIds' | translate}}"
+                   [matChipInputFor]="customers"
+                   [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                   [matChipInputAddOnBlur]="true"
+                   (matChipInputTokenEnd)="addCustomer($event)"
+                   [disabled]="isExpired">
+          </mat-chip-list>
+        </mat-form-field>
+
+      </div>
+    </form>
+
+  </mat-card-content>
+
+  <mat-card-actions>
+    <button mat-flat-button color="accent" (click)="save()" [disabled]="form.invalid || customerIdsEmpty || (feature.id && isExpired)" style="margin-right: 1em">
+      {{'save' | translate}}
+    </button>
+    <button mat-flat-button color="warn" (click)="archive()" [disabled]="!feature.id || (feature.id && isExpired)">
+      {{'archive' | translate}}
+    </button>
+  </mat-card-actions>
+</mat-card>

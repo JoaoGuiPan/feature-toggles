@@ -1,0 +1,34 @@
+@import "~flexboxgrid/css/index.min.css";
+@import "~flexboxgrid/css/flexboxgrid.css";
+
+@import './styles/default.scss';
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+.primary-bkg {
+  background-color: mat-color($theme-primary);
+}
+
+.accent-bkg {
+  background-color: mat-color($theme-accent);
+}
+
+.full-width {
+  width: 100%;
+}
+
+.full-height {
+  height: 100%;
+}
+
+.clickable {
+  cursor: pointer;
+}
+
+.clickable-row {
+  cursor: pointer;
+  &:hover {
+    background-color: whitesmoke;
+  }
+}

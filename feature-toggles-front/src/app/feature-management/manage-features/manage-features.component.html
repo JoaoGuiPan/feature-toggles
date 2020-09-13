@@ -1,0 +1,14 @@
+
+<mat-card class="mat-elevation-z0">
+  <mat-card-content>
+    <div class="row">
+      <div class="col-xs-6 col-md-4">
+        <app-list-features #list (selectedFeature)="selectedFeature = $event"></app-list-features>
+      </div>
+
+      <div class="col-xs-6 col-md-8">
+        <app-edit-feature [selectedFeature]="selectedFeature" (added)="list.init()"></app-edit-feature>
+      </div>
+    </div>
+  </mat-card-content>
+</mat-card>

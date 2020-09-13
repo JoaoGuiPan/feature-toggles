@@ -1,0 +1,40 @@
+<mat-toolbar color="primary" class="app-header">
+  <div class="row full-width">
+    <div class="col-xs-8">
+      <div class="row middle-xs col-xs-12">
+        <button mat-icon-button (click)="openMenu()">
+          <mat-icon>menu</mat-icon>
+        </button>
+        <span>
+          {{title | translate}}
+        </span>
+      </div>
+    </div>
+    <div class="col-xs-4">
+      <div class="row end-xs">
+        <button mat-icon-button [matMenuTriggerFor]="language">
+          <mat-icon>language</mat-icon>
+        </button>
+        <mat-menu #language="matMenu">
+          <button mat-menu-item (click)="changeLanguage('en')">
+            English
+          </button>
+          <button mat-menu-item (click)="changeLanguage('fr')">
+            Français
+          </button>
+        </mat-menu>
+        <button mat-button [matMenuTriggerFor]="user">
+          <mat-label>
+            {{this.authentication.userLoggedIn}}
+          </mat-label>
+          <mat-icon>account_circle</mat-icon>
+        </button>
+        <mat-menu #user="matMenu">
+          <button mat-menu-item (click)="logout()">
+            {{'logout' | translate}}
+          </button>
+        </mat-menu>
+      </div>
+    </div>
+  </div>
+</mat-toolbar>

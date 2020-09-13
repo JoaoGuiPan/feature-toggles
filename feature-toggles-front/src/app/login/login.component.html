@@ -1,0 +1,40 @@
+
+<div class="row center-xs login-container">
+  <div class="col-xs-10 col-md-8, col-lg-6">
+    <mat-card>
+      <mat-card-title>
+        {{'login.title' | translate}}
+      </mat-card-title>
+
+      <mat-card-content class="login-content">
+
+        <form #form="ngForm">
+
+          <div class="row center-xs">
+            <mat-form-field class="col-xs-8 col-md-6">
+              <mat-label>
+                {{'login.user' | translate}}
+              </mat-label>
+              <input matInput type="text" name="user" [(ngModel)]="user" required/>
+            </mat-form-field>
+          </div>
+
+          <div class="row center-xs">
+            <mat-form-field class="col-xs-8 col-md-6">
+              <mat-label>
+                {{'login.password' | translate}}
+              </mat-label>
+              <input matInput type="password" name="password" [(ngModel)]="password" required/>
+            </mat-form-field>
+          </div>
+
+        </form>
+
+      </mat-card-content>
+
+      <mat-card-actions>
+        <button mat-flat-button color="accent" (click)="login()" [disabled]="form.invalid">{{'enter' | translate}}</button>
+      </mat-card-actions>
+    </mat-card>
+  </div>
+</div>
