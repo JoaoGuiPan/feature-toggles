@@ -1,0 +1,45 @@
+version: '3'
+
+services:
+  feature-toggles-frontend:
+    image: feature-toggles-frontend:latest
+    container_name: feature-toggles-ui
+    build:
+      context: ./feature-toggles-front
+    environment:
+      - SERVER_PORT=3000
+      - SERVER_NAME=localhost
+      - API_URL=http://host.docker.internal:8080/
+    ports:
+      - 3000:3000
+    networks:
+      - feature-toggle-network
+
+  feature-toggles-backend:
+    image: feature-toggles-backend:latest
+    container_name: feature-toggles
+    build:
+      context: ./feature-toggles-api
+    environment:
+      - SPRING_PROFILES_ACTIVE=prod
+      - MYSQL_URI=jdbc:mysql://host.docker.internal:3306/featuretoggles
+      - MYSQL_USER=root
+      - MYSQL_PWD=password
+    ports:
+      - 8080:8080
+    networks:
+      - feature-toggle-network
+
+  feature-toggles-db:
+    image: mysql:8.0.32
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_DATABASE: featuretoggles
+    ports:
+      - "3308:3306"
+    networks:
+      - feature-toggle-network
+
+networks:
+  feature-toggle-network:
+    driver: bridge

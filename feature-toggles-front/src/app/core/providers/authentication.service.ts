@@ -1,10 +1,11 @@
 import { Injectable, Inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
-import {StorageService, SESSION_STORAGE} from 'ngx-webstorage-service';
+import { StorageService, SESSION_STORAGE } from 'ngx-webstorage-service';
 import { BaseUrls } from 'src/app/model/base-urls.model';
 import { CONSTANTS } from 'src/app/common/constants';
 import { Router } from '@angular/router';
+import { tap } from 'rxjs/operators';
 
 const loginUrls = new BaseUrls('auth');
 
@@ -21,10 +22,17 @@ export class AuthenticationService {
   }
 
   login(user: string, password: string) {
+
     const encondedAuth = btoa(`${user}:${password}`);
-    this.storageService.set(CONSTANTS.authenticationHeader, `Basic ${encondedAuth}`);
-    this.storageService.set(CONSTANTS.loggedUser, user);
-    return this.http.get(loginUrls.root);
+    const authHeader = `Basic ${encondedAuth}`;
+
+    return this.http.get(loginUrls.root, { headers: { [CONSTANTS.authorizationHeader]: authHeader } })
+    .pipe(
+      tap(() => {
+        this.storageService.set(CONSTANTS.authorizationHeader, authHeader);
+        this.storageService.set(CONSTANTS.loggedUser, user);
+      })
+    );
   }
 
   logout() {

@@ -3,11 +3,11 @@
   <mat-card-content>
     <div class="row">
       <div class="col-xs-6 col-md-4">
-        <app-list-features #list (selectedFeature)="selectedFeature = $event"></app-list-features>
+        <app-list-features #features (selectedFeature)="selectedFeature = $event"></app-list-features>
       </div>
 
       <div class="col-xs-6 col-md-8">
-        <app-edit-feature [selectedFeature]="selectedFeature" (added)="list.init()"></app-edit-feature>
+        <app-edit-feature [selectedFeature]="selectedFeature" (saved)="features.list()"></app-edit-feature>
       </div>
     </div>
   </mat-card-content>

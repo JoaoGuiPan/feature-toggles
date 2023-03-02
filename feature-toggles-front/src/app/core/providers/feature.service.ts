@@ -24,6 +24,10 @@ export class FeatureService {
     return this.http.put<FeatureToggle>(featureUrls.byId(id), feature);
   }
 
+  save(feature: FeatureToggle) {
+    return feature.id ? this.update(feature.id, feature) : this.create(feature);
+  }
+
   getById(id: string) {
     return this.http.get<FeatureToggle>(featureUrls.byId(id));
   }

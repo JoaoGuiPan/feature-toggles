@@ -23,7 +23,7 @@
           <mat-label>
             {{'feature.expiresOn' | translate}}
           </mat-label>
-          <input matInput [matDatepicker]="picker" name="expiresOn" [(ngModel)]="feature.expiresOn" [disabled]="feature.id && isExpired" required>
+          <input matInput [matDatepicker]="picker" name="expiresOn" [(ngModel)]="feature.expiresOn" [min]="minDate" [disabled]="feature.id && isExpired" required>
           <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
           <mat-datepicker #picker></mat-datepicker>
         </mat-form-field>
@@ -36,22 +36,21 @@
           <mat-label>
             {{'feature.description' | translate}}
           </mat-label>
-          <textarea matInput name="description"
-            [matTextareaAutosize]="true"
-            [matAutosizeMinRows]="3"
+          <textarea matInput cdkTextareaAutosize
+            name="description"
+            cdkAutosizeMinRows="3"
             [(ngModel)]="feature.description"
             [disabled]="isExpired"></textarea>
         </mat-form-field>
 
         <mat-form-field class="col-xs-12">
           <mat-chip-list #customers>
-            <mat-chip *ngFor="let customer of feature.customerIds"
-              [selectable]="feature.id && !isExpired" [removable]="feature.id && !isExpired"
+            <mat-chip *ngFor="let customer of feature.customerIds" [removable]="!isExpired"
               (removed)="removeCustomer(customer)">
               {{customer}}
               <mat-icon matChipRemove>cancel</mat-icon>
             </mat-chip>
-            <input placeholder="{{'feature.customerIds' | translate}}"
+            <input placeholder="{{'feature.customerIds' | translate}} *"
                    [matChipInputFor]="customers"
                    [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
                    [matChipInputAddOnBlur]="true"

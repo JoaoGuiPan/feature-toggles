@@ -43,7 +43,6 @@ export function createTranslateLoader(http: HttpClient) {
     AppRoutingModule,
     CoreModule,
   ],
-  providers: [],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -1,5 +1,5 @@
 export const environment = {
   production: true,
-  baseUrl: 'http://localhost:4200',
-  docUrls: 'http://localhost:8080/swagger-ui.html'
+  baseUrl: `${window.location.origin}/api`,
+  docUrls: `${window.location.origin}/api/swagger-ui.html`
 };

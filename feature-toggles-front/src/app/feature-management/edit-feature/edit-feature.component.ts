@@ -1,45 +1,49 @@
 import { COMMA, ENTER } from '@angular/cdk/keycodes';
-import { Component, OnInit, Input, Output } from '@angular/core';
+import { Component, OnInit, Input, Output, OnDestroy } from '@angular/core';
 import { FeatureToggleListItem, FeatureToggle } from 'src/app/model/feature-toggle.model';
 import { FeatureService } from 'src/app/core/providers/feature.service';
 import { MatChipInputEvent } from '@angular/material/chips';
 import { Router } from '@angular/router';
 import { Subject } from 'rxjs';
-import * as moment from 'moment';
+import { takeUntil } from 'rxjs/operators';
 
 @Component({
   selector: 'app-edit-feature',
   templateUrl: './edit-feature.component.html',
   styleUrls: ['./edit-feature.component.scss']
 })
-export class EditFeatureComponent implements OnInit {
+export class EditFeatureComponent implements OnInit, OnDestroy {
 
   readonly separatorKeysCodes: number[] = [ENTER, COMMA];
+  readonly minDate = new Date()
 
   feature: FeatureToggle | null;
 
   @Output()
-  added = new Subject<FeatureToggle>();
+  saved = new Subject<FeatureToggle>();
+
+  destroy = new Subject<void>();
 
   constructor(private featureService: FeatureService, private router: Router) { }
 
   ngOnInit() {
   }
 
+  ngOnDestroy(): void {
+    this.destroy.next();
+    this.destroy.complete();
+  }
+
   @Input()
   set selectedFeature(feature: FeatureToggleListItem) {
     if (feature) {
-
       if (feature.id) {
-        this.featureService.getById(feature.id).toPromise()
-          .then(f => this.feature = f)
-          .catch(err => console.error(err));
-
+        this.featureService.getById(feature.id)
+        .pipe(takeUntil(this.destroy))
+        .subscribe(f => this.feature = f);
       } else {
-
-        this.newFeature();
+        this.feature = new FeatureToggle();
       }
-
     }
   }
 
@@ -50,24 +54,21 @@ export class EditFeatureComponent implements OnInit {
   get isExpired() {
 
     if (this.feature) {
-      const expiresOn = moment(this.feature.expiresOn).startOf('day');
-      return !moment().startOf('day').diff(expiresOn);
+      const expiresOn = new Date(this.feature.expiresOn).getTime();
+      return new Date().getTime() >= expiresOn;
     }
 
     return false;
   }
 
   addCustomer(event: MatChipInputEvent): void {
-    const input = event.input;
     const value = event.value;
 
     if ((value || '').trim()) {
       this.feature.customerIds.push(value.trim());
     }
 
-    if (input) {
-      input.value = '';
-    }
+    event.chipInput.clear();
   }
 
   removeCustomer(customer: string) {
@@ -79,32 +80,15 @@ export class EditFeatureComponent implements OnInit {
   }
 
   save() {
-    if (this.feature.id) {
-      this.featureService.update(this.feature.id, this.feature).toPromise()
-        .then(_ => this.added.next(this.feature))
-        .catch(err => console.error(err));
-    } else {
-      this.featureService.create(this.feature).toPromise()
-        .then(_ => this.added.next(this.feature))
-        .catch(err => console.error(err));
-    }
+    this.featureService.save(this.feature)
+      .pipe(takeUntil(this.destroy))
+      .subscribe(() => this.saved.next(this.feature));
   }
 
   archive() {
-    this.featureService.archive(this.feature.id).toPromise()
-      .then(_ => this.added.next(this.feature))
-      .catch(err => console.error(err));
-  }
-
-  private newFeature() {
-    this.feature = {
-      technicalName: null,
-      displayName: null,
-      expiresOn: null,
-      description: null,
-      inverted: false,
-      customerIds: [],
-    };
+    this.featureService.archive(this.feature.id)
+      .pipe(takeUntil(this.destroy))
+      .subscribe(() => this.saved.next(this.feature));
   }
 
 }

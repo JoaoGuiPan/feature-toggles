@@ -3,6 +3,6 @@ export const CONSTANTS = {
   locale: {
     default: 'en'
   },
-  authenticationHeader: 'Authentication',
+  authorizationHeader: 'Authorization',
   loggedUser: 'USER'
 };
