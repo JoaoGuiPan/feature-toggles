@@ -12,8 +12,8 @@ import { Subject } from 'rxjs';
 })
 export class LoginComponent implements OnInit {
 
-  user: string | null;
-  password: string | null;
+  user = '';
+  password = '';
 
   destroy = new Subject<void>();
 
@@ -27,9 +27,7 @@ export class LoginComponent implements OnInit {
   login() {
     this.authentication.login(this.user, this.password)
     .pipe(takeUntil(this.destroy))
-    .subscribe(() => {
-      this.router.navigateByUrl('home');
-    }, (err) => console.error(err));
+    .subscribe(() => this.router.navigateByUrl('home'));
   }
 
 }

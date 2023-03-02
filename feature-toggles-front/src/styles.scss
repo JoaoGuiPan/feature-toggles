@@ -1,24 +1,27 @@
 @import "~flexboxgrid/css/index.min.css";
 @import "~flexboxgrid/css/flexboxgrid.css";
 
+/* You can add global styles to this file, and also import other style files */
+
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
 .full-width {
-  width: 100%;
+    width: 100%;
 }
 
 .full-height {
-  height: 100%;
+    height: 100%;
 }
 
 .clickable {
-  cursor: pointer;
+    cursor: pointer;
 }
 
 .clickable-row {
-  cursor: pointer;
-  &:hover {
-    background-color: whitesmoke;
-  }
+    cursor: pointer;
+    &:hover {
+        background-color: whitesmoke;
+    }
 }
+  

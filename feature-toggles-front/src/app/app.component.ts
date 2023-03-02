@@ -18,6 +18,7 @@ interface MenuItem {
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
+
   title = 'header.title';
 
   menuItems: MenuItem[] = [

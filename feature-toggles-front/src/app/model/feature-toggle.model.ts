@@ -1,6 +1,6 @@
 
 export class FeatureToggle {
-  id?: string;
+  id?: string | null;
   technicalName: string;
   displayName: string;
   expiresOn: Date;
@@ -9,17 +9,21 @@ export class FeatureToggle {
   customerIds: string[];
 
   constructor() {
-      this.technicalName = null,
-      this.displayName = null,
-      this.expiresOn = null,
-      this.description = null,
+      this.technicalName = '',
+      this.displayName = '',
+      this.expiresOn = new Date(),
+      this.description = '',
       this.inverted = false,
       this.customerIds = [];
   }
 }
 
-export interface FeatureToggleListItem {
-  id?: string;
+export class FeatureToggleListItem {
+  id?: string | null;
   technicalName: string;
-  displayName?: string;
+  displayName?: string | null;
+
+  constructor() {
+    this.technicalName = '';
+  }
 }

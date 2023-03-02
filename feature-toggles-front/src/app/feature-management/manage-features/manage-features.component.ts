@@ -8,7 +8,7 @@ import { FeatureToggleListItem } from 'src/app/model/feature-toggle.model';
 })
 export class ManageFeaturesComponent implements OnInit {
 
-  selectedFeature: FeatureToggleListItem | null;
+  selectedFeature: FeatureToggleListItem | null = null;
 
   constructor() { }
 

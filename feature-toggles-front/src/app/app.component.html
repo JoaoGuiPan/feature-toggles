@@ -15,7 +15,7 @@
         <mat-divider></mat-divider>
         <mat-list-item>
           <a mat-flat-button [routerLink]="item.url" routerLinkActive #rla="routerLinkActive"
-            [color]="rla.isActive ? 'accent' : 'default'" (click)="drawer.toggle() && title = item.title">
+            [color]="rla.isActive ? 'accent' : 'default'" (click)="drawer.toggle()">
             <mat-icon>{{item.icon}}</mat-icon>
             {{item.name | translate}}
           </a>
@@ -42,5 +42,3 @@
   </mat-drawer-content>
 
 </mat-drawer-container>
-
-

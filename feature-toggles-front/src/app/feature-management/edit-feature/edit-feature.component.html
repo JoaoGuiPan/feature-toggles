@@ -9,27 +9,27 @@
           <mat-label>
             {{'feature.technicalName' | translate}}
           </mat-label>
-          <input matInput type="text" name="technicalName" [(ngModel)]="feature.technicalName" required [disabled]="feature.id" />
+          <input matInput type="text" name="technicalName" [(ngModel)]="feature.technicalName" [disabled]="feature.id!!" required />
         </mat-form-field>
 
         <mat-form-field class="col-xs-12 col-md-6">
           <mat-label>
             {{'feature.displayName' | translate}}
           </mat-label>
-          <input matInput type="text" name="displayName" [(ngModel)]="feature.displayName" [disabled]="feature.id && isExpired"/>
+          <input matInput type="text" name="displayName" [(ngModel)]="feature.displayName" [disabled]="feature.id!! && isExpired"/>
         </mat-form-field>
 
         <mat-form-field class="col-xs-12 col-md-6">
           <mat-label>
             {{'feature.expiresOn' | translate}}
           </mat-label>
-          <input matInput [matDatepicker]="picker" name="expiresOn" [(ngModel)]="feature.expiresOn" [min]="minDate" [disabled]="feature.id && isExpired" required>
+          <input matInput [matDatepicker]="picker" name="expiresOn" [(ngModel)]="feature.expiresOn" [min]="minDate" [disabled]="feature.id!! && isExpired" required>
           <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
           <mat-datepicker #picker></mat-datepicker>
         </mat-form-field>
 
         <div class="col-xs-12 col-md-6" style="padding-top: 1em;">
-          <mat-checkbox name="inverted" [(ngModel)]="feature.inverted" [disabled]="feature.id && isExpired">{{'feature.inverted' | translate}}</mat-checkbox>
+          <mat-checkbox name="inverted" [(ngModel)]="feature.inverted" [disabled]="feature.id!! && isExpired">{{'feature.inverted' | translate}}</mat-checkbox>
         </div>
 
         <mat-form-field class="col-xs-12">
@@ -44,9 +44,9 @@
         </mat-form-field>
 
         <mat-form-field class="col-xs-12">
-          <mat-chip-list #customers>
+          <mat-chip-grid #customers>
             <mat-chip *ngFor="let customer of feature.customerIds" [removable]="!isExpired"
-              (removed)="removeCustomer(customer)">
+              (removed)="removeCustomer(customer)" color="accent">
               {{customer}}
               <mat-icon matChipRemove>cancel</mat-icon>
             </mat-chip>
@@ -56,7 +56,7 @@
                    [matChipInputAddOnBlur]="true"
                    (matChipInputTokenEnd)="addCustomer($event)"
                    [disabled]="isExpired">
-          </mat-chip-list>
+          </mat-chip-grid>
         </mat-form-field>
 
       </div>

@@ -17,7 +17,7 @@ export class EditFeatureComponent implements OnInit, OnDestroy {
   readonly separatorKeysCodes: number[] = [ENTER, COMMA];
   readonly minDate = new Date()
 
-  feature: FeatureToggle | null;
+  feature = new FeatureToggle();
 
   @Output()
   saved = new Subject<FeatureToggle>();
@@ -35,7 +35,7 @@ export class EditFeatureComponent implements OnInit, OnDestroy {
   }
 
   @Input()
-  set selectedFeature(feature: FeatureToggleListItem) {
+  set selectedFeature(feature: FeatureToggleListItem | null) {
     if (feature) {
       if (feature.id) {
         this.featureService.getById(feature.id)
@@ -86,7 +86,7 @@ export class EditFeatureComponent implements OnInit, OnDestroy {
   }
 
   archive() {
-    this.featureService.archive(this.feature.id)
+    this.featureService.archive(this.feature.id!)
       .pipe(takeUntil(this.destroy))
       .subscribe(() => this.saved.next(this.feature));
   }

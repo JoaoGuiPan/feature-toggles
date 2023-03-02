@@ -1,8 +1,8 @@
 import { Component, Output, AfterViewInit, ViewChild, OnDestroy } from '@angular/core';
 import { FeatureToggleListItem } from 'src/app/model/feature-toggle.model';
 import { FeatureService } from 'src/app/core/providers/feature.service';
-import { MatLegacyTableDataSource as MatTableDataSource } from '@angular/material/legacy-table';
-import { MatLegacyPaginator as MatPaginator } from '@angular/material/legacy-paginator';
+import { MatTableDataSource } from '@angular/material/table';
+import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { UntypedFormControl } from '@angular/forms';
 import { Subject } from 'rxjs';
@@ -17,15 +17,15 @@ export class ListFeaturesComponent implements AfterViewInit, OnDestroy {
 
   readonly displayedColumns: string[] = ['name', 'displayName'];
 
-  dataSource: MatTableDataSource<FeatureToggleListItem>;
+  dataSource: MatTableDataSource<FeatureToggleListItem> = new MatTableDataSource();
 
-  @ViewChild(MatPaginator) paginator: MatPaginator;
-  @ViewChild(MatSort) sort: MatSort;
+  @ViewChild(MatPaginator) paginator: MatPaginator | null = null;
+  @ViewChild(MatSort) sort: MatSort | null = null;
 
   @Output()
   selectedFeature = new Subject<FeatureToggleListItem>();
 
-  selected: FeatureToggleListItem | null;
+  selected: FeatureToggleListItem | null = null;
 
   filterCtrl = new UntypedFormControl();
 
@@ -50,7 +50,9 @@ export class ListFeaturesComponent implements AfterViewInit, OnDestroy {
 
   list() {
     this.featureService.list()
-    .pipe(takeUntil(this.destroy))
+    .pipe(
+      takeUntil(this.destroy)
+    )
     .subscribe(featureList => {
       Object.assign(this.features, featureList);
 
@@ -59,7 +61,7 @@ export class ListFeaturesComponent implements AfterViewInit, OnDestroy {
       this.dataSource.sort = this.sort;
 
       this.select(featureList[0]);
-    }, (err) => console.error(err))
+    })
   }
 
   filterFeatures(value: string) {
@@ -74,8 +76,8 @@ export class ListFeaturesComponent implements AfterViewInit, OnDestroy {
   create() {
     this.selectedFeature.next(
       {
-        technicalName: null,
-        displayName: null
+        technicalName: '',
+        displayName: ''
       }
     );
   }

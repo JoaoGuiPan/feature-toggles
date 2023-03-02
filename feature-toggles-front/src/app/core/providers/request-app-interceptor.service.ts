@@ -6,7 +6,7 @@ import {catchError, tap} from 'rxjs/operators';
 import { SESSION_STORAGE, StorageService } from 'ngx-webstorage-service';
 import { AuthenticationService } from './authentication.service';
 import { CONSTANTS } from 'src/app/common/constants';
-import { MatLegacySnackBar as MatSnackBar } from '@angular/material/legacy-snack-bar';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 
 // TODO i18n
@@ -64,7 +64,7 @@ export class RequestAppInterceptorService implements HttpInterceptor {
         this.snackBar.open(INTERNAL_ERROR, CLOSE_BTN);
       }
       this.loaderService.hide();
-      return throwError(error);
+      return throwError(() => error);
     }
   }
 
