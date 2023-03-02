@@ -33,7 +33,7 @@ data class FeatureToggleJpaRepository(
 
     // assumption: archiving is basically a forced expiration
     override fun delete(entity: FeatureToggle) {
-        entity.expiresOn = LocalDate.now().atStartOfDay().toLocalDate()
+        entity.expiresOn = LocalDate.now().atStartOfDay()
         repository.save(entity)
     }
 

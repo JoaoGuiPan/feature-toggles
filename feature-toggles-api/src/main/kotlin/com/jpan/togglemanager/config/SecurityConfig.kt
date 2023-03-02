@@ -2,6 +2,7 @@ package com.jpan.togglemanager.config
 
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
+import org.springframework.http.HttpMethod
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity
 import org.springframework.security.config.annotation.web.builders.HttpSecurity
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity
@@ -21,17 +22,22 @@ class SecurityConfig: WebSecurityConfigurerAdapter() {
 
     override fun configure(http: HttpSecurity) {
         http
-                .authorizeRequests()
-                .antMatchers("/v2/api-docs", "/swagger-ui.html", "/swagger-ui.html/**", "/webjars/**")
-                .permitAll()
-                .and()
-                .authorizeRequests()
-                .antMatchers("toggles", "login")
-                .authenticated()
-                .and()
-                .httpBasic()
-                .and()
-                .csrf().disable()
+            .authorizeRequests()
+            .antMatchers(HttpMethod.OPTIONS)
+            .permitAll()
+            .and()
+            .authorizeRequests()
+            .antMatchers( "/v2/api-docs", "/swagger-ui.html", "/swagger-ui.html/**", "/webjars/**")
+            .permitAll()
+
+        http
+            .authorizeRequests()
+            .antMatchers("/toggles", "/auth")
+            .authenticated()
+            .and()
+            .httpBasic()
+            .and()
+            .csrf().disable()
     }
 
     @Bean

@@ -1,10 +1,13 @@
 package com.jpan.togglemanager.model
 
-import java.time.LocalDate
+import jdk.jfr.Timestamp
+import java.time.LocalDateTime
 import javax.persistence.*
+import javax.validation.constraints.FutureOrPresent
 import javax.validation.constraints.NotBlank
 import javax.validation.constraints.NotNull
 
+@Suppress("com.haulmont.jpb.DataClassEqualsAndHashCodeInspection") // kotlin data class already provides equals and hashcode
 @Entity
 data class FeatureToggle(
         @Id
@@ -17,7 +20,9 @@ data class FeatureToggle(
 
         var displayName: String? = null,
 
-        var expiresOn: LocalDate? = null,
+        @Timestamp
+        @FutureOrPresent
+        var expiresOn: LocalDateTime? = null,
 
         var description: String? = null,
 

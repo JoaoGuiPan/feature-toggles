@@ -1,0 +1,9 @@
+
+spring:
+  datasource:
+    driverClassName: com.mysql.jdbc.Driver
+    url: ${MYSQL_URI:jdbc:mysql://localhost:3306/featuretoggles}
+    username: ${MYSQL_USER:root}
+    password: ${MYSQL_PWD:password}
+  jpa:
+    database-platform: org.hibernate.dialect.MySQL8Dialect

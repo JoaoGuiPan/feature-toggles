@@ -3,7 +3,8 @@ package com.jpan.togglemanager.dto
 import com.fasterxml.jackson.annotation.JsonGetter
 import com.fasterxml.jackson.annotation.JsonIgnore
 import com.fasterxml.jackson.annotation.JsonSetter
-import java.time.LocalDate
+import jdk.jfr.Timestamp
+import java.time.LocalDateTime
 import javax.validation.constraints.NotBlank
 import javax.validation.constraints.NotEmpty
 import javax.validation.constraints.NotNull
@@ -41,8 +42,9 @@ data class FeatureToggleDto (
 
         var inverted: Boolean = false,
 
+        @Timestamp
         @JsonIgnore
-        var expiresOn: LocalDate? = null,
+        var expiresOn: LocalDateTime? = null,
 
         @JsonIgnore
         var customerIds: Set<String> = emptySet()
@@ -61,7 +63,7 @@ data class FeatureToggleDto (
     @JsonGetter
     fun isExpired(): Boolean {
         if (expiresOn != null) {
-            return LocalDate.now() >= expiresOn!!
+            return LocalDateTime.now().isAfter(expiresOn)
         }
         return false
     }
