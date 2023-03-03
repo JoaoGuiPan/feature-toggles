@@ -22,15 +22,12 @@ import {MatListModule} from '@angular/material/list';
 
 // *************** BUTTONS & INDICATORS ***************
 import {MatButtonModule} from '@angular/material/button';
-import {MatButtonToggleModule} from '@angular/material/button-toggle';
 import {MatBadgeModule} from '@angular/material/badge';
 import {MatChipsModule} from '@angular/material/chips';
 import {MatIconModule} from '@angular/material/icon';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
-import {MatRippleModule} from '@angular/material/core';
 
 // *************** POPUPS & MODALS ***************
-import {MatBottomSheetModule} from '@angular/material/bottom-sheet';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
 
 // *************** DATA TABLE ***************
@@ -61,14 +58,14 @@ const MaterialModules = [
   // MatTabsModule,
   // MatTreeModule,
   MatButtonModule,
-  MatButtonToggleModule,
+  // MatButtonToggleModule,
   MatBadgeModule,
   MatChipsModule,
   MatIconModule,
   MatProgressSpinnerModule,
   // MatProgressBarModule,
-  MatRippleModule,
-  MatBottomSheetModule,
+  // MatRippleModule,
+  // MatBottomSheetModule,
   // MatDialogModule,
   MatSnackBarModule,
   // MatTooltipModule,
