@@ -7,8 +7,6 @@ services:
     environment:
       MYSQL_DATABASE: featuretoggles
       MYSQL_ROOT_PASSWORD: password
-      # MYSQL_USER: root
-      # MYSQL_PASSWORD: password
     ports:
       - "3306:3306"
     networks:
@@ -29,10 +27,10 @@ services:
       # - DB_URI=jdbc:mysql://feature-toggles-db:3306/featuretoggles?useSSL=false&serverTimezone=Europe/Amsterdam
     ports:
       - 8080:8080
-    networks:
-      - feature-toggle-network
     depends_on:
       - feature-toggles-db
+    networks:
+      - feature-toggle-network
   
   feature-toggles-frontend:
     image: feature-toggles-frontend:latest
@@ -44,11 +42,11 @@ services:
       API_URL: http://host.docker.internal:8080/
     ports:
       - 80:80
-    networks:
-      - feature-toggle-network
     depends_on:
       - feature-toggles-db
       - feature-toggles-backend
+    networks:
+      - feature-toggle-network
 
 networks:
   feature-toggle-network:
