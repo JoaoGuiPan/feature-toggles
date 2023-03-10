@@ -13,13 +13,13 @@ services:
       - feature-toggle-network
 
   feature-toggles-backend:
-    image: feature-toggles-backend:latest
+    image: joaoguipan/feature-toggles-backend:latest
     container_name: feature-toggles
     build:
       context: ./feature-toggles-api
     environment:
       - SPRING_PROFILES_ACTIVE=prod
-      # - DB_HOST=feature-toggles-db
+      - DB_HOST=feature-toggles-db
       # - DB_PORT=3306
       # - DB_NAME=featuretoggles
       # - DB_USER=root
@@ -33,7 +33,7 @@ services:
       - feature-toggle-network
   
   feature-toggles-frontend:
-    image: feature-toggles-frontend:latest
+    image: joaoguipan/feature-toggles-frontend:latest
     container_name: feature-toggles-ui
     build:
       context: ./feature-toggles-front
