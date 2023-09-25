@@ -14,6 +14,7 @@ import io.swagger.annotations.ApiImplicitParams
 import io.swagger.annotations.ApiOperation
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
+import org.springframework.http.ResponseEntity
 import org.springframework.security.access.prepost.PreAuthorize
 import org.springframework.web.bind.annotation.*
 import javax.validation.Valid
@@ -98,5 +99,11 @@ data class FeatureToggleController(
         // assumption: archiving is a logical delete
         archiveFeature.delete(feature)
         logger.info("Feature Toggle archived, ${feature.technicalName}")
+    }
+
+    @GetMapping("/toomany")
+    fun tooManyRequests(): ResponseEntity<String> {
+        System.out.println("------------------ BAD BOY, TOO MANY REQUESTS! ---------------")
+        return ResponseEntity.status(429).header("Retry-After", "10").build()
     }
 }

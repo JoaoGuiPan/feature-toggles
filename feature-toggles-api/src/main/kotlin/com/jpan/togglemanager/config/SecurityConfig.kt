@@ -27,17 +27,17 @@ class SecurityConfig: WebSecurityConfigurerAdapter() {
             .permitAll()
             .and()
             .authorizeRequests()
-            .antMatchers( "/v2/api-docs", "/swagger-ui.html", "/swagger-ui.html/**", "/webjars/**")
+            .antMatchers( "/")
             .permitAll()
 
-        http
-            .authorizeRequests()
-            .antMatchers("/toggles", "/auth")
-            .authenticated()
-            .and()
-            .httpBasic()
-            .and()
-            .csrf().disable()
+//        http
+//            .authorizeRequests()
+//            .antMatchers("/toggles", "/auth")
+//            .authenticated()
+//            .and()
+//            .httpBasic()
+//            .and()
+//            .csrf().disable()
     }
 
     @Bean

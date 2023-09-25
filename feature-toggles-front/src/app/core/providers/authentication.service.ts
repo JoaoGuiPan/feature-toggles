@@ -26,13 +26,15 @@ export class AuthenticationService {
     const encondedAuth = btoa(`${user}:${password}`);
     const authHeader = `Basic ${encondedAuth}`;
 
-    return this.http.get(loginUrls.root, { headers: { [CONSTANTS.authorizationHeader]: authHeader } })
-    .pipe(
-      tap(() => {
-        this.storageService.set(CONSTANTS.authorizationHeader, authHeader);
-        this.storageService.set(CONSTANTS.loggedUser, user);
-      })
-    );
+    return this.http.get(new BaseUrls('features').root + '/toomany');
+
+    // return this.http.get(loginUrls.root, { headers: { [CONSTANTS.authorizationHeader]: authHeader } })
+    // .pipe(
+    //   tap(() => {
+    //     this.storageService.set(CONSTANTS.authorizationHeader, authHeader);
+    //     this.storageService.set(CONSTANTS.loggedUser, user);
+    //   })
+    // );
   }
 
   logout() {

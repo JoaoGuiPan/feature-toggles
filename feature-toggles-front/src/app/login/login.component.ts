@@ -27,7 +27,7 @@ export class LoginComponent implements OnInit {
   login() {
     this.authentication.login(this.user, this.password)
     .pipe(takeUntil(this.destroy))
-    .subscribe(() => this.router.navigateByUrl('home'));
+    .subscribe(args => console.log(args));
   }
 
 }
