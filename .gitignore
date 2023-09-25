@@ -6,6 +6,9 @@
 !.vscode/extensions.json
 .history/*
 
+# IDE - IntelliJ
+.idea/
+
 # System Files
 .DS_Store
 Thumbs.db
