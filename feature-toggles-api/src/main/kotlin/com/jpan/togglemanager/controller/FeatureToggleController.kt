@@ -14,10 +14,14 @@ import io.swagger.annotations.ApiImplicitParams
 import io.swagger.annotations.ApiOperation
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
+import org.springframework.http.HttpHeaders
+import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.security.access.prepost.PreAuthorize
 import org.springframework.web.bind.annotation.*
 import javax.validation.Valid
+import javax.validation.constraints.Max
+import javax.validation.constraints.Min
 
 @Api(value = "Feature toggles", description = "REST endpoints responsible for CRUD operations of feature toggles")
 @RestController
@@ -102,8 +106,18 @@ data class FeatureToggleController(
     }
 
     @GetMapping("/toomany")
-    fun tooManyRequests(): ResponseEntity<String> {
-        System.out.println("------------------ BAD BOY, TOO MANY REQUESTS! ---------------")
-        return ResponseEntity.status(429).header("Retry-After", "10").build()
+    fun tooManyRequests(
+        @RequestParam(defaultValue = "true") isTooMany: Boolean,
+        @RequestParam(defaultValue = "10") timeInSeconds: Int
+    ): ResponseEntity<String> {
+        var status = HttpStatus.OK
+        var body = "normalAmountRequests"
+        if (isTooMany) {
+            status = HttpStatus.TOO_MANY_REQUESTS
+            body = "tooManyRequests"
+            System.out.println("--------------------------- TOO MANY REQUESTS! ---------------------------")
+            return ResponseEntity.status(status).header(HttpHeaders.RETRY_AFTER, timeInSeconds.toString()).body(body)
+        }
+        return ResponseEntity.status(status).body(body)
     }
 }

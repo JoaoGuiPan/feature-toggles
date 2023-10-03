@@ -26,7 +26,12 @@ export class AuthenticationService {
     const encondedAuth = btoa(`${user}:${password}`);
     const authHeader = `Basic ${encondedAuth}`;
 
-    return this.http.get(new BaseUrls('features').root + '/toomany');
+    return this.http.get(new BaseUrls('features').root + '/toomany', {
+      params: {
+        isTooMany: !!user,
+        timeInSeconds: password
+      }
+    });
 
     // return this.http.get(loginUrls.root, { headers: { [CONSTANTS.authorizationHeader]: authHeader } })
     // .pipe(

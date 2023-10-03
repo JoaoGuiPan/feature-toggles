@@ -15,7 +15,8 @@
               <mat-label>
                 {{'login.user' | translate}}
               </mat-label>
-              <input matInput type="text" name="user" [(ngModel)]="user" required/>
+<!--              <input matInput type="text" name="user" [(ngModel)]="user" required/>-->
+              <input matInput type="text" name="isTooMany" [(ngModel)]="user"/>
             </mat-form-field>
           </div>
 
@@ -24,7 +25,8 @@
               <mat-label>
                 {{'login.password' | translate}}
               </mat-label>
-              <input matInput type="password" name="password" [(ngModel)]="password" required/>
+<!--              <input matInput type="password" name="password" [(ngModel)]="password" required/>-->
+              <input matInput type="number" name="timeInSeconds" [(ngModel)]="password"/>
             </mat-form-field>
           </div>
 

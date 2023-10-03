@@ -8,13 +8,13 @@ import org.springframework.context.annotation.Configuration;
 import reactor.core.publisher.Mono;
 
 @Configuration
-public class GatewayGlobalFiltersConfig {
+public class GatewayGlobalFiltersLoggingConfig {
 
-    final Logger logger = LoggerFactory.getLogger(GatewayGlobalFiltersConfig.class);
+    final Logger logger = LoggerFactory.getLogger(GatewayGlobalFiltersLoggingConfig.class);
 
     @Bean
     public GlobalFilter postGlobalFilter() {
         return (exchange, chain) -> chain.filter(exchange)
-                .then(Mono.fromRunnable(() -> logger.info("Global Post Filter executed")));
+                .then(Mono.fromRunnable(() -> logger.info("Gateway Post Filter executed")));
     }
 }
