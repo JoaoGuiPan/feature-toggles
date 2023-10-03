@@ -1,0 +1,20 @@
+
+server:
+  port: ${PORT:9999}
+
+backend:
+  api:
+    url: http://host.docker.internal:8080/
+
+#spring:
+#  cloud:
+#    gateway:
+#      routes:
+#        - id: redirect-user-agent
+#          uri: https://google.com
+#          predicates:
+#            - Header=User-Agent, Googlebot
+#          filters:
+#            - RedirectTo=429, /features/toomany
+
+debug: true

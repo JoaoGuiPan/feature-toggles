@@ -16,7 +16,11 @@
 
 	<properties>
 		<java.version>11</java.version>
-		<kotlin.version>1.3.72</kotlin.version>
+		<kotlin.version>1.8.22</kotlin.version>
+		<javax.validation.version>2.0.0.Final</javax.validation.version>
+		<org.hibernate.validator.version>6.1.5.Final</org.hibernate.validator.version>
+		<com.mysql.version>8.1.0</com.mysql.version>
+		<io.springfox.version>2.9.2</io.springfox.version>
 	</properties>
 
 	<dependencies>
@@ -40,17 +44,17 @@
 		<dependency>
 			<groupId>javax.validation</groupId>
 			<artifactId>validation-api</artifactId>
-			<version>2.0.0.Final</version>
+			<version>${javax.validation.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.hibernate.validator</groupId>
 			<artifactId>hibernate-validator</artifactId>
-			<version>6.1.5.Final</version>
+			<version>${org.hibernate.validator.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.hibernate.validator</groupId>
 			<artifactId>hibernate-validator-annotation-processor</artifactId>
-			<version>6.0.2.Final</version>
+			<version>${org.hibernate.validator.version}</version>
 		</dependency>
 
 		<dependency>
@@ -59,9 +63,11 @@
 			<scope>runtime</scope>
 		</dependency>
 
+		<!-- https://mvnrepository.com/artifact/com.mysql/mysql-connector-j -->
 		<dependency>
-			<groupId>mysql</groupId>
-			<artifactId>mysql-connector-java</artifactId>
+			<groupId>com.mysql</groupId>
+			<artifactId>mysql-connector-j</artifactId>
+			<version>${com.mysql.version}</version>
 		</dependency>
 
 		<dependency>
@@ -94,16 +100,17 @@
 			<scope>test</scope>
 		</dependency>
 
+		<!-- https://mvnrepository.com/artifact/io.springfox/springfox-swagger2 -->
 		<dependency>
 			<groupId>io.springfox</groupId>
 			<artifactId>springfox-swagger2</artifactId>
-			<version>2.9.2</version>
+			<version>${io.springfox.version}</version>
 		</dependency>
 
 		<dependency>
 			<groupId>io.springfox</groupId>
 			<artifactId>springfox-swagger-ui</artifactId>
-			<version>2.9.2</version>
+			<version>${io.springfox.version}</version>
 		</dependency>
 
 	</dependencies>

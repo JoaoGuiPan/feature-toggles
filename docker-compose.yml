@@ -18,20 +18,29 @@ services:
     build:
       context: ./feature-toggles-api
     environment:
-      - SPRING_PROFILES_ACTIVE=prod
+#      - SPRING_PROFILES_ACTIVE=prod
       - DB_HOST=feature-toggles-db
-      # - DB_PORT=3306
-      # - DB_NAME=featuretoggles
-      # - DB_USER=root
-      # - DB_PWD=password
-      # - DB_URI=jdbc:mysql://feature-toggles-db:3306/featuretoggles?useSSL=false&serverTimezone=Europe/Amsterdam
     ports:
-      - 8080:8080
+      - "8080:8080"
     depends_on:
       - feature-toggles-db
     networks:
       - feature-toggle-network
-  
+
+  feature-toggles-gateway:
+    image: joaoguipan/feature-toggles-gateway:latest
+    container_name: feature-toggles-gateway
+    build:
+      context: ./feature-toggles-gateway
+    environment:
+      - SPRING_PROFILES_ACTIVE=prod
+    ports:
+      - "9999:9999"
+    depends_on:
+      - feature-toggles-backend
+    networks:
+      - feature-toggle-network
+
   feature-toggles-frontend:
     image: joaoguipan/feature-toggles-frontend:latest
     container_name: feature-toggles-ui
@@ -39,12 +48,13 @@ services:
       context: ./feature-toggles-front
     environment:
       SERVER_NAME: localhost
-      API_URL: http://host.docker.internal:8080/
+      API_URL: http://host.docker.internal:9999/
     ports:
-      - 80:80
+      - "80:80"
     depends_on:
       - feature-toggles-db
       - feature-toggles-backend
+      - feature-toggles-gateway
     networks:
       - feature-toggle-network
 
